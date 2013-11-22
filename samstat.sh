@@ -38,6 +38,9 @@ dir2="/home/dmvelasc/Projects/Almond_BGI/Data" # sequence directory prefix
 dir3="/home/dmvelasc/Projects/Almond_BGI/Analysis" # BAM directory
 
 # Begin samstat script
-#"$dir1"/samstat "$dir2"/"${accession[0]}"/"${id[0]}"_1.fq.gz "$dir2"/"${accession[0]}"/"${id[0]}"_2.fq.gz "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam -s DPRU0194-all
-"$dir1"/samstat -s DPRU0194-sam "$dir3"/SAM/"${accession[0]}".sam
-"$dir1"/samstat -s DPRU0194-bam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
+"$dir1"/samstat "$dir3"/SAM/"${accession[0]}".sam
+# This line did not work - segmentation fault error - probably due to gzipped fastq files "$dir1"/samstat "$dir2"/"${accession[0]}"/"${id[0]}"_1.fq.gz "$dir2"/"${accession[0]}"/"${id[0]}"_2.fq.gz "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam -s DPRU0194-all
+# This line works "$dir1"/samstat -s DPRU0194-sam "$dir3"/SAM/"${accession[0]}".sam
+# This line works "$dir1"/samstat -s DPRU0194-bam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
+# This following line works - however does not produce html due to a "Bad x in betai" which is a function that looks at quality percentages. The numbers for the phased bam files are negative which produces the betai error.
+# "$dir1"/samstat "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
