@@ -10,6 +10,7 @@ Scripts include:
 * phase.sh
 * popbam.sh (not yet implemented)
 * sam.sh
+* samstat.sh
 
 ##### bwa.sh
 Arrayed read mapping using BWA-mem for multiple accessions declared in an array.
@@ -25,3 +26,7 @@ Getting population genetics data directly from BAM files using PopBAM.
 
 ##### sam.sh
 Filler script to rename files from stdout to sam due to accidental oversight not directing stdout to file.
+
+##### samstat.sh
+Script to evaluate SAM and or BAM files. In this case original BWA-mem read mapping and samtools phased BAM files,
+including chimeric reads.
