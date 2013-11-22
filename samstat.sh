@@ -1,17 +1,17 @@
 #!/bin/bash
-#SBATCH -D /home/dmvelasc/Data/Velasco_BGI/Analysis/Stat
-##SBATCH -o /home/dmvelasc/Data/Velasco_BGI/slurm-log/sam-stdout-%A_%a.txt
-##SBATCH -e /home/dmvelasc/Data/Velasco_BGI/slurm-log/sam-stderr-%A_%a.txt
-#SBATCH -o /home/dmvelasc/Data/Velasco_BGI/slurm-log/sam-stdout-%j.txt
-#SBATCH -e /home/dmvelasc/Data/Velasco_BGI/slurm-log/sam-stderr-%j.txt
-#SBATCH -J sam
+#SBATCH -D /home/dmvelasc/Projects/Almond_BGI/Analysis/Stat
+#SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stdout-%j.txt
+#SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stderr-%j.txt
+#SBATCH -J samstat
 #SBATCH -p serial
-##SBATCH -a 1-9
 #SBATCH -n 4
 #SBATCH -c 4
 set -e
 set -u
 
+# -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stdout-%A_%a.txt
+# -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stderr-%A_%a.txt
+# -a 1-9
 
 # -D is like qsub -cwd
 # -o is like qsub -o
@@ -32,10 +32,12 @@ declare -a id=(FCD2GPRACXX-SZAIPI032084-64 FCC2GP0ACXX-SZAIPI032110-94_L8 FCD2GP
 
 # Declare arrays (these will need to change depending on sequence data organization)
 
-# Declare directories
+# Declare directories (also change depending on organization)
 dir1="/home/dmvelasc/Software/samstat/src" # program directory
 dir2="/home/dmvelasc/Projects/Almond_BGI/Data" # sequence directory prefix
-dir3="/home/dmvelasc/Projects/Almond_BGI/Analysis"
+dir3="/home/dmvelasc/Projects/Almond_BGI/Analysis" # BAM directory
 
 # Begin samstat script
-"$dir1"/samstat -s DPRU0194 "$dir2"/"${accession[0]}"/"${id[0]}"_1.fq.gz "$dir2"/"${accession[0]}"/"${id[0]}"_2.fq.gz "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
+#"$dir1"/samstat "$dir2"/"${accession[0]}"/"${id[0]}"_1.fq.gz "$dir2"/"${accession[0]}"/"${id[0]}"_2.fq.gz "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam -s DPRU0194-all
+"$dir1"/samstat -s DPRU0194-sam "$dir3"/SAM/"${accession[0]}".sam
+"$dir1"/samstat -s DPRU0194-bam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
