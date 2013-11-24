@@ -6,6 +6,7 @@ All scripts were run (except as noted) using the UC Davis CAES cluster.
 
 Scripts include:
 * bwa.sh
+* fastqc.sh
 * merge.sh (not yet implemented)
 * phase.sh
 * popbam.sh (not yet implemented)
@@ -14,6 +15,9 @@ Scripts include:
 
 ##### bwa.sh
 Arrayed read mapping using BWA-mem for multiple accessions declared in an array.
+
+##### fastqc.sh
+Quality control of fastq files using FastQC, a java program that produces zipped html output.
 
 ##### merge.sh
 For merging BAM files to use with PopBAM.
@@ -29,4 +33,4 @@ Filler script to rename files from stdout to sam due to accidental oversight not
 
 ##### samstat.sh
 Script to evaluate SAM and or BAM files. In this case original BWA-mem read mapping and samtools phased BAM files,
-including chimeric reads.
+including chimeric reads. (It can evaluate FASTA and FASTQ, but not if they are gzipped - produces segmentation fault.)
