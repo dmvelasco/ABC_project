@@ -1,30 +1,23 @@
 #!/bin/bash
 #SBATCH -D /home/dmvelasc/Projects/Almond_BGI/Analysis/Stat
-#SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stdout-%j.txt
-#SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stderr-%j.txt
+#SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stdout-%A_%a.txt
+#SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stderr-%A_%a.txt
+#SBATCH -a 1-9
 #SBATCH -J samstat
-#SBATCH -p serial
-#SBATCH -n 4
-#SBATCH -c 4
+#SBATCH -p hi
+#SBATCH -n 1
+#SBATCH -c 1
 set -e
 set -u
 
-# -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stdout-%A_%a.txt
-# -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stderr-%A_%a.txt
-# -a 1-9
-
-# -D is like qsub -cwd
-# -o is like qsub -o
-# -e is like qsub -e
-# -J is like qsub -j
+# -a is like qsub -t
 # %A is array job ID
 # %a is array job index
 # %j is job allocation number
 
 # Declare number variables
-#x=$SLURM_ARRAY_TASK_ID
-#i=$x-1
-#j=$x
+x=$SLURM_ARRAY_TASK_ID
+i=$x-1
 
 # Declare arrays (these will need to change depending on sequence data organization)
 declare -a accession=(DPRU0194 DPRU0579 DPRU1467.9 DPRU2327.16 DPRU2493.7 FPS-Lovell UCD-fenzliana UCD-TNP USDA-arabica)
@@ -38,9 +31,4 @@ dir2="/home/dmvelasc/Projects/Almond_BGI/Data" # sequence directory prefix
 dir3="/home/dmvelasc/Projects/Almond_BGI/Analysis" # BAM directory
 
 # Begin samstat script
-"$dir1"/samstat "$dir3"/SAM/"${accession[0]}".sam
-# This line did not work - segmentation fault error - probably due to gzipped fastq files "$dir1"/samstat "$dir2"/"${accession[0]}"/"${id[0]}"_1.fq.gz "$dir2"/"${accession[0]}"/"${id[0]}"_2.fq.gz "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam -s DPRU0194-all
-# This line works "$dir1"/samstat -s DPRU0194-sam "$dir3"/SAM/"${accession[0]}".sam
-# This line works "$dir1"/samstat -s DPRU0194-bam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
-# This following line works - however does not produce html due to a "Bad x in betai" which is a function that looks at quality percentages. The numbers for the phased bam files are negative which produces the betai error.
-# "$dir1"/samstat "$dir3"/SAM/"${accession[0]}".sam "$dir3"/Phase/"${accession[0]}".0.bam "$dir3"/Phase/"${accession[0]}".1.bam "$dir3"/Phase/"${accession[0]}".chimera.bam
+"$dir1"/samstat "$dir3"/SAM/"${accession["$i"]}".sam
