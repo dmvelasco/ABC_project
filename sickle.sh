@@ -1,3 +1,4 @@
+#!/bin/bash
 #SBATCH -D /group/jrigrp2/Velasco/Almond_BGI/
 #SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/sickle-stdout-%A_%a.txt
 #SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/sickle-stderr-%A_%a.txt
