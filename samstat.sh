@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -D /home/dmvelasc/Projects/Almond_BGI/Analysis/Stat
+#SBATCH -D /home/dmvelasc/Projects/Almond_BGI/Analysis
 #SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stdout-%A_%a.txt
 #SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/samstat-stderr-%A_%a.txt
 #SBATCH -a 1-12
@@ -23,7 +23,7 @@ declare -a accession=(DPRU0194 DPRU0579 DPRU0582 DPRU1467.9 DPRU1871.1 DPRU2327.
 
 # Declare directories (also depends on organization)
 dir1="/home/dmvelasc/Software/samstat/src" # program directory
-dir2="/home/dmvelasc/Projects/Almond_BGI/Analysis" # BAM directory
+dir2="/home/dmvelasc/Projects/Almond_BGI/Analysis/SAM_2014-01-17" # BAM directory
 
 # Begin samstat script
-"$dir1"/samstat "$dir2"/SAM_2014-01-09/"${accession["$i"]}".sam
+"$dir1"/samstat "$dir2"/"${accession["$i"]}".sam
