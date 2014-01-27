@@ -26,4 +26,4 @@ dir1="/home/dmvelasc/Software/samstat/src" # program directory
 dir2="/home/dmvelasc/Projects/Almond_BGI/Analysis/SAM_2014-01-17" # BAM directory
 
 # Begin samstat script
-"$dir1"/samstat "$dir2"/"${accession["$i"]}".sam
+"$dir1"/samstat "$dir2"/"${accession["$i"]}"_uniquereads.bam
