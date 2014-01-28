@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -D /home/dmvelasc/Projects/Almond_BGI
-#SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/sam-stdout-%A-%a.txt
-#SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/sam-stderr-%A-%a.txt
+#SBATCH -o /home/dmvelasc/Projects/Almond_BGI/slurm-log/markdup-stdout-%A-%a.txt
+#SBATCH -e /home/dmvelasc/Projects/Almond_BGI/slurm-log/markdup-stderr-%A-%a.txt
 #SBATCH -J markdup
 #SBATCH -p serial
 #SBATCH -a 1-12
@@ -33,17 +33,17 @@ dir2="/home/dmvelasc/Projects/Almond_BGI/Analysis/SAM_2014-01-17" # SAM director
 # -S input is SAM format
 
 # convert SAM to BAM
-"$dir1"/samtools view -bhuS "$dir2"/"${accession["$i"]}".sam -o "$dir2"/"${accession["$i"]}".bam
+#"$dir1"/samtools view -bhuS "$dir2"/"${accession["$i"]}".sam -o "$dir2"/"${accession["$i"]}".bam
 
 # sort BAM file
-"$dir1"/samtools sort "$dir2"/"${accession["$i"]}".bam "$dir2"/"${accession["$i"]}".sorted
+#"$dir1"/samtools sort "$dir2"/"${accession["$i"]}".bam "$dir2"/"${accession["$i"]}".sorted
 
 # convert back to uncompressed BAM
-"$dir1"/samtools view -bhu "$dir2"/"${accession["$i"]}".sorted.bam -o "$dir2"/"${accession["$i"]}".sort.bam
+#"$dir1"/samtools view -bhu "$dir2"/"${accession["$i"]}".sorted.bam -o "$dir2"/"${accession["$i"]}".sort.bam
 
 
 #### PICARDTOOLS ####
 module load picardtools
 # picard tools 1.100, modified 2013-10-07; current version is 1.106, modified 2014-01-13
 
-picardtools MarkDuplicates INPUT="$dir2"/"${accession["$i"]}".sort.bam OUTPUT="$dir2"/"${accession["$i"]}"_uniquereads.bam METRICS_FILE="$dir2"/MarkDup_metrics_"${accession["$i"]}" REMOVE_DUPLICATES=true ASSUME_SORTED=true
+java -jar /share/apps/picardtools-1.100/MarkDuplicates.jar INPUT="$dir2"/"${accession["$i"]}".sort.bam OUTPUT="$dir2"/"${accession["$i"]}"_uniquereads.bam METRICS_FILE="$dir2"/MarkDup_metrics_"${accession["$i"]}" REMOVE_DUPLICATES=true ASSUME_SORTED=true
